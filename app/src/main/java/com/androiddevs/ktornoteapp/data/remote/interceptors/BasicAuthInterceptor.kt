@@ -4,11 +4,12 @@ import com.androiddevs.ktornoteapp.other.Constants.IGNORE_AUTH_URL
 import okhttp3.Credentials
 import okhttp3.Interceptor
 import okhttp3.Response
+import javax.inject.Inject
 
-class BasicAuthInterceptor : Interceptor {
+class BasicAuthInterceptor @Inject constructor(
+    private val email: String?, val password: String?
+) : Interceptor {
 
-    val email: String? = null
-    val password: String? = null
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
