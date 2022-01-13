@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id "androidx.navigation.safeargs"
 
 }
 
@@ -33,7 +34,7 @@ android {
         targetSdkVersion 31
         versionCode 1
         versionName "1.0"
-
+        viewBinding.enabled = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
