@@ -29,7 +29,7 @@ android {
         configurations.all {
             resolutionStrategy { force 'androidx.core:core-ktx:1.6.0' }
         }
-        applicationId "com.vmakd1916gmail.com.mysocialnetwork"
+        applicationId "com.vmakd1916gmail.com.ktornoteapp"
         minSdkVersion 21
         targetSdkVersion 31
         versionCode 1

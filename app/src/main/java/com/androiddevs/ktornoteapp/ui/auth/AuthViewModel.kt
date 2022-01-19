@@ -1,11 +1,47 @@
 package com.androiddevs.ktornoteapp.ui.auth
 
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.androiddevs.ktornoteapp.databinding.FragmentAddModifiedNoteBinding
+import androidx.lifecycle.viewModelScope
+import com.androiddevs.ktornoteapp.data.remote.responses.SimpleResponse
+import com.androiddevs.ktornoteapp.other.Event
+import com.androiddevs.ktornoteapp.other.Resource
+import com.androiddevs.ktornoteapp.repository.AuthRepository
+import com.androiddevs.ktornoteapp.repository.AuthRepositoryImpl
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@HiltViewModel
+class AuthViewModel @Inject constructor(
+    private val authRepositoryImpl: AuthRepositoryImpl
+    ) : ViewModel() {
 
-class AuthViewModel: ViewModel() {
+    private val _registerStatus = MutableLiveData<Event<Resource<SimpleResponse>>>()
+    val registerStatus: LiveData<Event<Resource<SimpleResponse>>> = _registerStatus
 
+    fun register(email:String, password:String, confirmPassword:String){
+        _registerStatus.postValue(Event(Resource.Loading()))
+
+        if(email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()){
+            _registerStatus.postValue(Event(Resource.Error("Please fill out all fields")))
+            return
+        }
+
+        if(password!=confirmPassword){
+            _registerStatus.postValue(Event(Resource.Error("The password do not match")))
+        }
+        viewModelScope.launch(Dispatchers.IO){
+            val response = authRepositoryImpl.register(email,password)
+            response.data?.body()?.let {
+                _registerStatus.postValue(Event(Resource.Success(it)))
+                return@launch
+            }
+            _registerStatus.postValue(Event(Resource.Error(response.message!!)))
+        }
+    }
 
 }

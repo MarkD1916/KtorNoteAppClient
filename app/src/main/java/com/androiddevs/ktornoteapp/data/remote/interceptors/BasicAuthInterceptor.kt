@@ -6,10 +6,10 @@ import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject
 
-class BasicAuthInterceptor @Inject constructor(
-    private val email: String?, val password: String?
-) : Interceptor {
+class BasicAuthInterceptor : Interceptor {
 
+    var email = null
+    var password = null
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()

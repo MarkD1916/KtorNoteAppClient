@@ -164,6 +164,7 @@ class NoteDaoTest {
         )
         dao.insertNote(note)
         val noteByID = dao.getNoteById(note.id)
+        Log.d("getNoteById", "${note.javaClass.name},${noteByID?.javaClass?.name} ")
         assertThat(noteByID).isEqualTo(note)
     }
 

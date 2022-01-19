@@ -10,6 +10,7 @@ import com.androiddevs.ktornoteapp.data.remote.interceptors.BasicAuthInterceptor
 import com.androiddevs.ktornoteapp.other.Constants.BASE_URL
 import com.androiddevs.ktornoteapp.other.Constants.DATABASE_NAME
 import com.androiddevs.ktornoteapp.other.Constants.ENCRYPTED_SHARED_PREF_NAME
+import com.androiddevs.ktornoteapp.repository.AuthRepositoryImpl
 import com.vmakd1916gmail.com.login_logout_register.DB.NoteDatabase
 import dagger.Module
 import dagger.Provides
@@ -37,20 +38,24 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideBasicAuthInterceptor(email: String?, password: String?): BasicAuthInterceptor =
-        BasicAuthInterceptor(email, password)
+    fun provideBasicAuthInterceptor(): BasicAuthInterceptor =
+        BasicAuthInterceptor()
 
 
     @Provides
     fun provideOkHttpClient(basicAuthInterceptor: BasicAuthInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(basicAuthInterceptor)
+
             .build()
     }
 
     @Provides
+    fun providesBaseUrl(): String = "http://10.0.2.2:8001"
+
+    @Provides
     @Singleton
-    fun provideRetrofit(client: OkHttpClient): Retrofit = Retrofit.Builder()
+    fun provideRetrofit(BASE_URL: String, client: OkHttpClient): Retrofit = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
         .baseUrl(BASE_URL)
         .client(client)
@@ -60,6 +65,12 @@ object AppModule {
     @Provides
     fun providePostApi(retrofit: Retrofit): NoteApi =
         retrofit.create(NoteApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideAuthRepository(
+        noteApi: NoteApi
+    ): AuthRepositoryImpl = AuthRepositoryImpl(noteApi)
 
     @Singleton
     @Provides
