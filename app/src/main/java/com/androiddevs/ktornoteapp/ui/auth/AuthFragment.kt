@@ -1,20 +1,17 @@
 package com.androiddevs.ktornoteapp.ui.auth
 
-import android.content.SharedPreferences
 import android.content.pm.ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.androiddevs.ktornoteapp.R
 import com.androiddevs.ktornoteapp.databinding.FragmentAuthBinding
-import com.androiddevs.ktornoteapp.other.Constants.KEY_LOGGED_IN_EMAIL
-import com.androiddevs.ktornoteapp.other.Constants.KEY_PASSWORD
 import com.androiddevs.ktornoteapp.other.EventObserver
 import com.androiddevs.ktornoteapp.preferences.BasicAuthPreferences
 import com.androiddevs.ktornoteapp.ui.snackbar

@@ -1,11 +1,17 @@
 package com.androiddevs.ktornoteapp.ui
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.androiddevs.ktornoteapp.R
 import com.androiddevs.ktornoteapp.databinding.ActivityMainBinding
+import com.androiddevs.ktornoteapp.preferences.BasicAuthPreferences
+import com.androiddevs.ktornoteapp.ui.auth.AuthFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -15,11 +21,23 @@ class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
     val mBinding get() = _binding!!
 
+    @Inject
+    lateinit var basicAuthSharedPreferences: BasicAuthPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
         navController = Navigation.findNavController(this, R.id.navHostFragment)
+
+        loginIfAuth()
+    }
+
+    private fun loginIfAuth() {
+        if (basicAuthSharedPreferences.getStoredEmail().isNotEmpty() && basicAuthSharedPreferences.getStoredPassword().isNotEmpty()){
+            navController.navigate(R.id.action_authFragment_to_noteFragment)
+        }
+
     }
 
     override fun onDestroy() {
