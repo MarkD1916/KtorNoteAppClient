@@ -1,4 +1,6 @@
 package com.androiddevs.ktornoteapp.other
+
+import com.androiddevs.ktornoteapp.data.remote.responses.SimpleResponse
 import retrofit2.Response
 
 inline fun <T> safeCall(action: () -> Resource<T>): Resource<T> {
@@ -9,12 +11,12 @@ inline fun <T> safeCall(action: () -> Resource<T>): Resource<T> {
     }
 }
 
-fun <T> getResponseFromServer(response: Response<T>): Response<T> {
+fun getAuthResponseFromServer(response: Response<SimpleResponse>): Response<SimpleResponse> {
 
-    if (response.isSuccessful) {
+    if (response.isSuccessful && response.body()!!.successful) {
         return response
     } else {
-        throw Exception(response.message())
+        throw Exception(response.body()?.message ?: response.message())
     }
 }
 

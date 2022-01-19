@@ -1,15 +1,20 @@
 package com.androiddevs.ktornoteapp.data.remote.interceptors
 
+import android.content.SharedPreferences
+import androidx.security.crypto.EncryptedSharedPreferences
 import com.androiddevs.ktornoteapp.other.Constants.IGNORE_AUTH_URL
+import com.androiddevs.ktornoteapp.preferences.BasicAuthPreferences
 import okhttp3.Credentials
 import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject
 
-class BasicAuthInterceptor : Interceptor {
+class BasicAuthInterceptor@Inject constructor(
+    private val sharedPreferences: BasicAuthPreferences
+) : Interceptor {
 
-    var email = null
-    var password = null
+    var email = sharedPreferences.getStoredEmail()
+    var password = sharedPreferences.getStoredPassword()
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()

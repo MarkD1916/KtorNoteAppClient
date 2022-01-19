@@ -10,6 +10,7 @@ import com.androiddevs.ktornoteapp.data.remote.interceptors.BasicAuthInterceptor
 import com.androiddevs.ktornoteapp.other.Constants.BASE_URL
 import com.androiddevs.ktornoteapp.other.Constants.DATABASE_NAME
 import com.androiddevs.ktornoteapp.other.Constants.ENCRYPTED_SHARED_PREF_NAME
+import com.androiddevs.ktornoteapp.preferences.BasicAuthPreferences
 import com.androiddevs.ktornoteapp.repository.AuthRepositoryImpl
 import com.vmakd1916gmail.com.login_logout_register.DB.NoteDatabase
 import dagger.Module
@@ -38,8 +39,8 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideBasicAuthInterceptor(): BasicAuthInterceptor =
-        BasicAuthInterceptor()
+    fun provideBasicAuthInterceptor(basicAuthSharedPreferences: BasicAuthPreferences): BasicAuthInterceptor =
+        BasicAuthInterceptor(basicAuthSharedPreferences)
 
 
     @Provides
@@ -74,18 +75,6 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideEncryptedSharedPreferences(
-        @ApplicationContext context: Context
-    ): SharedPreferences{
-        val masterKey = MasterKey.Builder(context)
-            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-            .build()
-        return EncryptedSharedPreferences.create(
-            context,
-            ENCRYPTED_SHARED_PREF_NAME,
-            masterKey,
-            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-        )
-    }
+    fun provideBasicAuthPreferences(@ApplicationContext context: Context) =
+        BasicAuthPreferences(context)
 }
