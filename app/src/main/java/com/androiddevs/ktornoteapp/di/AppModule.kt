@@ -1,17 +1,12 @@
 package com.androiddevs.ktornoteapp.di
 
 import android.content.Context
-import android.content.SharedPreferences
 import androidx.room.Room
-import androidx.security.crypto.EncryptedSharedPreferences
-import androidx.security.crypto.MasterKey
 import com.androiddevs.ktornoteapp.data.remote.api.NoteApi
 import com.androiddevs.ktornoteapp.data.remote.interceptors.BasicAuthInterceptor
-import com.androiddevs.ktornoteapp.other.Constants.BASE_URL
 import com.androiddevs.ktornoteapp.other.Constants.DATABASE_NAME
-import com.androiddevs.ktornoteapp.other.Constants.ENCRYPTED_SHARED_PREF_NAME
 import com.androiddevs.ktornoteapp.preferences.BasicAuthPreferences
-import com.androiddevs.ktornoteapp.repository.AuthRepositoryImpl
+import com.androiddevs.ktornoteapp.repository.auth.AuthRepositoryImpl
 import com.vmakd1916gmail.com.login_logout_register.DB.NoteDatabase
 import dagger.Module
 import dagger.Provides

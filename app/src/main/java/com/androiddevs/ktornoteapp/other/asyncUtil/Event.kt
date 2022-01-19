@@ -1,6 +1,7 @@
 package com.androiddevs.ktornoteapp.other
 
 import androidx.lifecycle.Observer
+import com.androiddevs.ktornoteapp.other.asyncUtil.Resource
 
 class Event<out T>(private val content: T) {
 

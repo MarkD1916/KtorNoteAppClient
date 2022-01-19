@@ -6,7 +6,11 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.androiddevs.ktornoteapp.R
+import com.androiddevs.ktornoteapp.adapters.AdapterActionListener
+import com.androiddevs.ktornoteapp.adapters.NoteAdapter
+import com.androiddevs.ktornoteapp.data.local.model.Note
 import com.androiddevs.ktornoteapp.databinding.FragmentNotesBinding
 import com.androiddevs.ktornoteapp.preferences.BasicAuthPreferences
 import com.androiddevs.ktornoteapp.ui.auth.AuthFragmentDirections
@@ -21,6 +25,8 @@ class NoteFragment: Fragment() {
     @Inject
     lateinit var basicAuthSharedPreferences: BasicAuthPreferences
 
+    private lateinit var noteAdapter: NoteAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -33,6 +39,9 @@ class NoteFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setupRecyclerView()
+
         mBinding.fabAddNote.setOnClickListener {
             findNavController().navigate(NoteFragmentDirections.actionNoteFragmentToModificationNoteFragment(""))
         }
@@ -55,6 +64,17 @@ class NoteFragment: Fragment() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun setupRecyclerView() = mBinding.rvNotes.apply {
+        noteAdapter = NoteAdapter(requireContext(), object: AdapterActionListener{
+            override fun itemClick(item: Note) {
+
+            }
+        })
+
+        adapter = noteAdapter
+        layoutManager = LinearLayoutManager(requireContext())
     }
 
     private fun logout() {

@@ -1,11 +1,12 @@
-package com.androiddevs.ktornoteapp.repository
+package com.androiddevs.ktornoteapp.repository.auth
 
 import com.androiddevs.ktornoteapp.data.remote.api.NoteApi
 import com.androiddevs.ktornoteapp.data.remote.requests.AccountRequest
 import com.androiddevs.ktornoteapp.data.remote.responses.SimpleResponse
-import com.androiddevs.ktornoteapp.other.Resource
+import com.androiddevs.ktornoteapp.other.asyncUtil.Resource
 import com.androiddevs.ktornoteapp.other.getAuthResponseFromServer
 import com.androiddevs.ktornoteapp.other.safeCall
+import com.androiddevs.ktornoteapp.repository.auth.AuthRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response

@@ -6,12 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.androiddevs.ktornoteapp.data.remote.responses.SimpleResponse
 import com.androiddevs.ktornoteapp.other.Event
-import com.androiddevs.ktornoteapp.other.Resource
-import com.androiddevs.ktornoteapp.repository.AuthRepository
-import com.androiddevs.ktornoteapp.repository.AuthRepositoryImpl
+import com.androiddevs.ktornoteapp.other.asyncUtil.Resource
+import com.androiddevs.ktornoteapp.repository.auth.AuthRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

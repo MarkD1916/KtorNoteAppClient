@@ -1,4 +1,4 @@
-package com.androiddevs.ktornoteapp.other
+package com.androiddevs.ktornoteapp.other.asyncUtil
 
 sealed class Resource<T>(val data: T? = null, val message: String? = null) {
 
