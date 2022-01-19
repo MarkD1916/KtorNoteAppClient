@@ -1,13 +1,10 @@
 package com.androiddevs.ktornoteapp.ui
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import com.androiddevs.ktornoteapp.R
 import com.androiddevs.ktornoteapp.databinding.ActivityMainBinding
 import com.androiddevs.ktornoteapp.preferences.BasicAuthPreferences
@@ -35,7 +32,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun loginIfAuth() {
         if (basicAuthSharedPreferences.getStoredEmail().isNotEmpty() && basicAuthSharedPreferences.getStoredPassword().isNotEmpty()){
-            navController.navigate(R.id.action_authFragment_to_noteFragment)
+            val navOptions = NavOptions.Builder()
+                .setPopUpTo(R.id.authFragment, true)
+                .build()
+            navController.navigate(AuthFragmentDirections.actionAuthFragmentToNoteFragment(), navOptions)
         }
 
     }
