@@ -1,9 +1,10 @@
 package com.androiddevs.ktornoteapp.ui.note
 
-import android.content.Intent
+import android.content.pm.ActivityInfo.SCREEN_ORIENTATION_USER
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,13 +13,14 @@ import com.androiddevs.ktornoteapp.adapters.AdapterActionListener
 import com.androiddevs.ktornoteapp.adapters.NoteAdapter
 import com.androiddevs.ktornoteapp.data.local.model.Note
 import com.androiddevs.ktornoteapp.databinding.FragmentNotesBinding
+import com.androiddevs.ktornoteapp.other.EventObserver
 import com.androiddevs.ktornoteapp.preferences.BasicAuthPreferences
-import com.androiddevs.ktornoteapp.ui.auth.AuthFragmentDirections
+import com.androiddevs.ktornoteapp.ui.snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class NoteFragment: Fragment() {
+class NoteFragment : Fragment() {
     private var _binding: FragmentNotesBinding? = null
     val mBinding get() = _binding!!
 
@@ -27,6 +29,7 @@ class NoteFragment: Fragment() {
 
     private lateinit var noteAdapter: NoteAdapter
 
+    private val viewModel: NoteViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -39,12 +42,38 @@ class NoteFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        requireActivity().requestedOrientation = SCREEN_ORIENTATION_USER
         setupRecyclerView()
-
+        subscribeToObservers()
         mBinding.fabAddNote.setOnClickListener {
-            findNavController().navigate(NoteFragmentDirections.actionNoteFragmentToModificationNoteFragment(""))
+            findNavController().navigate(
+                NoteFragmentDirections.actionNoteFragmentToModificationNoteFragment(
+                    ""
+                )
+            )
         }
+    }
+
+    private fun subscribeToObservers() {
+        viewModel.allNotes.observe(viewLifecycleOwner, EventObserver(
+            onLoading = {
+                it?.let { notes ->
+                    noteAdapter.notes = notes
+                }
+                mBinding.swipeRefreshLayout.isRefreshing = true
+            },
+            onError = {
+                snackbar(it.first)
+                it.second?.let {notes->
+                    noteAdapter.notes = notes
+                }
+                mBinding.swipeRefreshLayout.isRefreshing = false
+            }
+        ) {
+            noteAdapter.notes = it
+            mBinding.swipeRefreshLayout.isRefreshing = false
+        }
+        )
     }
 
 
@@ -54,22 +83,27 @@ class NoteFragment: Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.miLogout->{
+        when (item.itemId) {
+            R.id.miLogout -> {
                 logout()
                 val navOptions = NavOptions.Builder()
                     .setPopUpTo(R.id.noteFragment, true)
                     .build()
-                findNavController().navigate(NoteFragmentDirections.actionNoteFragmentToAuthFragment(), navOptions)
+                findNavController().navigate(
+                    NoteFragmentDirections.actionNoteFragmentToAuthFragment(),
+                    navOptions
+                )
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
     private fun setupRecyclerView() = mBinding.rvNotes.apply {
-        noteAdapter = NoteAdapter(requireContext(), object: AdapterActionListener{
+        noteAdapter = NoteAdapter(requireContext(), object : AdapterActionListener {
             override fun itemClick(item: Note) {
-
+                findNavController().navigate(
+                    NoteFragmentDirections.actionNoteFragmentToModificationNoteFragment(item.id.toString())
+                )
             }
         })
 

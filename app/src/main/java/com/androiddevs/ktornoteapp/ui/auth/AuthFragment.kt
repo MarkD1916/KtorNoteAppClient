@@ -74,7 +74,7 @@ class AuthFragment : Fragment() {
         viewModel.registerStatus.observe(viewLifecycleOwner, EventObserver(
             onError = {
                 mBinding.registerProgressBar.visibility = View.GONE
-                snackbar(it)
+                snackbar(it.first)
             },
             onLoading = {
                 mBinding.registerProgressBar.visibility = View.VISIBLE
@@ -87,7 +87,7 @@ class AuthFragment : Fragment() {
         viewModel.loginStatus.observe(viewLifecycleOwner, EventObserver(
             onError = {
                 mBinding.loginProgressBar.visibility = View.GONE
-                snackbar(it)
+                snackbar(it.first)
             },
             onLoading = {
                 mBinding.loginProgressBar.visibility = View.VISIBLE

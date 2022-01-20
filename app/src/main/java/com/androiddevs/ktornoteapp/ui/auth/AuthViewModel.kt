@@ -41,12 +41,12 @@ class AuthViewModel @Inject constructor(
                 _registerStatus.postValue(Event(Resource.Success(it)))
                 return@launch
             }
-            _registerStatus.postValue(Event(Resource.Error(response.message!!)))
+            _registerStatus.postValue(Event(Resource.Error(response.message!!, null)))
         }
     }
 
     fun login(email:String, password:String){
-        _loginStatus.postValue(Event(Resource.Loading()))
+        _loginStatus.postValue(Event(Resource.Loading(null)))
 
         if(email.isEmpty() || password.isEmpty()){
             _loginStatus.postValue(Event(Resource.Error("Please fill out all fields")))

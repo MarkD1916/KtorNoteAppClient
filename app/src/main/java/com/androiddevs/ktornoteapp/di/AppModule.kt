@@ -2,11 +2,13 @@ package com.androiddevs.ktornoteapp.di
 
 import android.content.Context
 import androidx.room.Room
+import com.androiddevs.ktornoteapp.data.local.DAO.NoteDAO
 import com.androiddevs.ktornoteapp.data.remote.api.NoteApi
 import com.androiddevs.ktornoteapp.data.remote.interceptors.BasicAuthInterceptor
 import com.androiddevs.ktornoteapp.other.Constants.DATABASE_NAME
 import com.androiddevs.ktornoteapp.preferences.BasicAuthPreferences
 import com.androiddevs.ktornoteapp.repository.auth.AuthRepositoryImpl
+import com.androiddevs.ktornoteapp.repository.main.MainRepositoryImpl
 import com.vmakd1916gmail.com.login_logout_register.DB.NoteDatabase
 import dagger.Module
 import dagger.Provides
@@ -67,6 +69,13 @@ object AppModule {
     fun provideAuthRepository(
         noteApi: NoteApi
     ): AuthRepositoryImpl = AuthRepositoryImpl(noteApi)
+
+    @Provides
+    @Singleton
+    fun provideMainRepository(
+        noteApi: NoteApi,
+        noteDAO: NoteDAO
+    ): MainRepositoryImpl = MainRepositoryImpl(noteApi, noteDAO)
 
     @Singleton
     @Provides

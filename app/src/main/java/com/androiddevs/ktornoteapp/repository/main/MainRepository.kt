@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface MainRepository {
 
-    fun getAllNotes(): Flow<Resource<out List<Note>>>
+    fun getAllNotes(): Flow<Resource<List<Note>>>
 }
