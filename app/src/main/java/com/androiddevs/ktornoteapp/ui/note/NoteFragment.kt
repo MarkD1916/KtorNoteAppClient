@@ -102,7 +102,7 @@ class NoteFragment : Fragment() {
         noteAdapter = NoteAdapter(requireContext(), object : AdapterActionListener {
             override fun itemClick(item: Note) {
                 findNavController().navigate(
-                    NoteFragmentDirections.actionNoteFragmentToModificationNoteFragment(item.id.toString())
+                    NoteFragmentDirections.actionNoteFragmentToModificationNoteFragment(item.id)
                 )
             }
         })

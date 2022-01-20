@@ -17,7 +17,7 @@ interface NoteDAO {
     suspend fun insertNote(note: Note)
 
     @Query("DELETE FROM notes_table WHERE id = :noteID")
-    suspend fun deleteNoteById(noteID: UUID)
+    suspend fun deleteNoteById(noteID: String)
 
     @Query("DELETE FROM notes_table WHERE isSynced = 1")
     suspend fun deleteAllSyncedNotes()
@@ -26,7 +26,7 @@ interface NoteDAO {
     fun observeNoteById(noteID: String): LiveData<Note>
 
     @Query("SELECT * FROM notes_table WHERE id = :noteID")
-    suspend fun getNoteById(noteID: UUID): Note?
+    suspend fun getNoteById(noteID: String): Note?
 
     @Query("SELECT * FROM notes_table ORDER BY date DESC")
     fun getAllNotes(): Flow<List<Note>>

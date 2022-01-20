@@ -36,6 +36,7 @@ class NoteAdapter(val context: Context, private val actionListener: AdapterActio
         private fun bindItem(item: Note) {
             with(this.binding) {
                 tvTitle.text = item.title
+                noteItemId.tag = item
                 if (!item.isSynced) {
                     ivSynced.setImageResource(R.drawable.ic_cross)
                     tvSynced.text = "Not Synced"
@@ -54,7 +55,7 @@ class NoteAdapter(val context: Context, private val actionListener: AdapterActio
                     val wrappedDrawable = DrawableCompat.wrap(it)
                     val color = Color.parseColor("#${item.color}")
                     DrawableCompat.setTint(wrappedDrawable, color)
-                    viewNoteColor.background = it
+                    viewNoteColor.background = wrappedDrawable
                 }
 
             }
@@ -80,6 +81,7 @@ class NoteAdapter(val context: Context, private val actionListener: AdapterActio
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         val binding =
             ItemNoteBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        binding.noteItemId.setOnClickListener(this)
         return NoteViewHolder(binding)
     }
 
