@@ -23,6 +23,9 @@ interface NoteDAO {
     @Query("DELETE FROM notes_table WHERE isSynced = 1")
     suspend fun deleteAllSyncedNotes()
 
+    @Query("DELETE FROM notes_table")
+    suspend fun deleteAllNotes()
+
     @Query("SELECT * FROM notes_table WHERE id = :noteID")
     fun observeNoteById(noteID: String): LiveData<Note>
 

@@ -54,6 +54,7 @@ class NoteFragment : Fragment() {
         requireActivity().requestedOrientation = SCREEN_ORIENTATION_USER
         setupRecyclerView()
         subscribeToObservers()
+        setupSwipeRefreshLayout()
         mBinding.fabAddNote.setOnClickListener {
             findNavController().navigate(
                 NoteFragmentDirections.actionNoteFragmentToModificationNoteFragment(
@@ -148,6 +149,12 @@ class NoteFragment : Fragment() {
                 show()
             }
 
+        }
+    }
+
+    private fun setupSwipeRefreshLayout(){
+        mBinding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.syncAllNotes()
         }
     }
 

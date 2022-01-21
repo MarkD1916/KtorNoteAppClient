@@ -19,4 +19,6 @@ interface MainRepository {
     fun getAllNotes(): Flow<Resource<List<Note>>>
 
     suspend fun getNoteById(noteId: String): Note?
+
+    suspend fun syncNotes()
 }
