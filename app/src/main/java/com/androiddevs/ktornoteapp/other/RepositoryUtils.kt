@@ -2,13 +2,19 @@ package com.androiddevs.ktornoteapp.other
 
 import com.androiddevs.ktornoteapp.data.remote.responses.SimpleResponse
 import com.androiddevs.ktornoteapp.other.asyncUtil.Resource
+import com.vmakd1916gmail.com.login_logout_register.api.Variables
 import retrofit2.Response
 
 inline fun <T> safeCall(action: () -> Resource<T>): Resource<T> {
     return try {
         action()
     } catch (e: Exception) {
-        Resource.Error(e.message ?: "An unknown error occurred")
+        if (!Variables.isNetworkConnected) {
+            Resource.Error("No Internet Connection")
+        }
+        else {
+            Resource.Error(e.message ?: "An unknown error occurred")
+        }
     }
 }
 

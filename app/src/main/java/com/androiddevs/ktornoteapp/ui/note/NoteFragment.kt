@@ -1,13 +1,18 @@
 package com.androiddevs.ktornoteapp.ui.note
 
 import android.content.pm.ActivityInfo.SCREEN_ORIENTATION_USER
+import android.graphics.Canvas
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.androiddevs.ktornoteapp.R
 import com.androiddevs.ktornoteapp.adapters.AdapterActionListener
 import com.androiddevs.ktornoteapp.adapters.NoteAdapter
@@ -16,6 +21,7 @@ import com.androiddevs.ktornoteapp.databinding.FragmentNotesBinding
 import com.androiddevs.ktornoteapp.other.EventObserver
 import com.androiddevs.ktornoteapp.preferences.BasicAuthPreferences
 import com.androiddevs.ktornoteapp.ui.snackbar
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -30,6 +36,9 @@ class NoteFragment : Fragment() {
     private lateinit var noteAdapter: NoteAdapter
 
     private val viewModel: NoteViewModel by viewModels()
+
+    private val swipingItem = MutableLiveData(false)
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -74,6 +83,10 @@ class NoteFragment : Fragment() {
             mBinding.swipeRefreshLayout.isRefreshing = false
         }
         )
+
+        swipingItem.observe(viewLifecycleOwner, Observer {
+            mBinding.swipeRefreshLayout.isEnabled = !it
+        })
     }
 
 
@@ -98,6 +111,46 @@ class NoteFragment : Fragment() {
         return super.onOptionsItemSelected(item)
     }
 
+    private val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
+      0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+    ){
+        override fun onChildDraw(
+            c: Canvas,
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            dX: Float,
+            dY: Float,
+            actionState: Int,
+            isCurrentlyActive: Boolean
+        ) {
+            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+            if(actionState == ItemTouchHelper.ACTION_STATE_SWIPE){
+                swipingItem.postValue(isCurrentlyActive)
+            }
+        }
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
+        ): Boolean {
+            return true
+        }
+
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            val position = viewHolder.layoutPosition
+            val note = noteAdapter.notes[position]
+            viewModel.deleteNote(note.id)
+            Snackbar.make(requireView(), "Note was successfully deleted", Snackbar.LENGTH_LONG).apply {
+                setAction("Undo"){
+                    viewModel.insertNote(note)
+                    viewModel.deleteLocallyDeletedNoteID(note.id)
+                }
+                show()
+            }
+
+        }
+    }
+
     private fun setupRecyclerView() = mBinding.rvNotes.apply {
         noteAdapter = NoteAdapter(requireContext(), object : AdapterActionListener {
             override fun itemClick(item: Note) {
@@ -109,6 +162,7 @@ class NoteFragment : Fragment() {
 
         adapter = noteAdapter
         layoutManager = LinearLayoutManager(requireContext())
+        ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(this)
     }
 
     private fun logout() {

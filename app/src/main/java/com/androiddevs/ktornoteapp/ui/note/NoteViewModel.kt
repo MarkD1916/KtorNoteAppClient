@@ -27,4 +27,19 @@ class NoteViewModel @Inject constructor(
     val allNotes: LiveData<Event<Resource<List<Note>>>> = _allNotes
 
     fun syncAllNotes() = _forceUpdate.postValue(true)
+
+
+    fun insertNote(note:Note) = viewModelScope.launch {
+        repository.insertNote(note)
+    }
+
+
+    fun deleteNote(noteID: String) = viewModelScope.launch {
+        repository.deleteNote(noteID)
+    }
+
+
+    fun deleteLocallyDeletedNoteID(deletedNoteID: String) = viewModelScope.launch {
+        repository.deleteLocallyDeletedNoteID(deletedNoteID)
+    }
 }

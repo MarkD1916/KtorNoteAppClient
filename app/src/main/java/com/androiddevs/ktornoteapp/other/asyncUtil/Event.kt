@@ -34,7 +34,7 @@ class EventObserver<T>(
                         content.data?.let{data->
                             error(Pair(it.message!!,data))
                         }
-                        error(it.message!!)
+                        error(Pair(it.message!!,null))
                     }
                 }
 
