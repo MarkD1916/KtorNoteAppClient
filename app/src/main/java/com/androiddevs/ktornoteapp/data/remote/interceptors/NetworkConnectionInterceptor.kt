@@ -8,7 +8,6 @@ import android.util.Log
 import androidx.annotation.RequiresPermission
 import kotlin.properties.Delegates
 
-
 class NetworkMonitor
 @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
 constructor(private val context: Context) {
@@ -46,6 +45,7 @@ constructor(private val context: Context) {
     }
 
 }
+
 object Variables {
     var isNetworkConnected: Boolean by Delegates.observable(false) { property, oldValue, newValue ->
         Log.d("Network connectivity", "$newValue")

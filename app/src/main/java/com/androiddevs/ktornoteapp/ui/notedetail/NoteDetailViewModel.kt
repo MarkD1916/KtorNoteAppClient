@@ -37,6 +37,6 @@ class NoteDetailViewModel @Inject constructor(
         }
     }
 
-        fun observeNoteByID(noteID: String) = repository.observeNoteByID(noteID)
+    fun observeNoteByID(noteID: String) = repository.observeNoteByID(noteID)
 
-    }
+}

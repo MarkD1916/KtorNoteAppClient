@@ -31,11 +31,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loginIfAuth() {
-        if (basicAuthSharedPreferences.getStoredEmail().isNotEmpty() && basicAuthSharedPreferences.getStoredPassword().isNotEmpty()){
+        if (basicAuthSharedPreferences.getStoredEmail()
+                .isNotEmpty() && basicAuthSharedPreferences.getStoredPassword().isNotEmpty()
+        ) {
             val navOptions = NavOptions.Builder()
                 .setPopUpTo(R.id.authFragment, true)
                 .build()
-            navController.navigate(AuthFragmentDirections.actionAuthFragmentToNoteFragment(), navOptions)
+            navController.navigate(
+                AuthFragmentDirections.actionAuthFragmentToNoteFragment(),
+                navOptions
+            )
         }
 
     }

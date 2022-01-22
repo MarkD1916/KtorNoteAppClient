@@ -6,7 +6,7 @@ import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 
 @HiltAndroidApp
-class NoteApplication: Application() {
+class NoteApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
@@ -14,7 +14,7 @@ class NoteApplication: Application() {
         NetworkMonitor(this).startNetworkCallback()
     }
 
-    override fun onTerminate(){
+    override fun onTerminate() {
         super.onTerminate()
         NetworkMonitor(this).stopNetworkCallback()
     }

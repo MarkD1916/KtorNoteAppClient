@@ -27,11 +27,3 @@ fun getAuthResponseFromServer(response: Response<SimpleResponse>): Response<Simp
     }
 }
 
-fun <T> getNoteResponseFromServer(response: Response<T>): Response<T> {
-
-    if (response.isSuccessful) {
-        return response
-    } else {
-        throw Exception(response.message())
-    }
-}

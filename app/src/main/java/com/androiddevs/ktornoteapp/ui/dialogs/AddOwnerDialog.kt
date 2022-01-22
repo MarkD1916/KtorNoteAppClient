@@ -1,6 +1,5 @@
 package com.androiddevs.ktornoteapp.ui.dialogs
 
-import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,10 +8,6 @@ import androidx.fragment.app.DialogFragment
 import com.androiddevs.ktornoteapp.R
 import com.androiddevs.ktornoteapp.databinding.EditTextEmailBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.skydoves.colorpickerview.ColorEnvelope
-
-import com.skydoves.colorpickerview.ColorPickerDialog
-import com.skydoves.colorpickerview.listeners.ColorEnvelopeListener
 
 class AddOwnerDialog : DialogFragment() {
 

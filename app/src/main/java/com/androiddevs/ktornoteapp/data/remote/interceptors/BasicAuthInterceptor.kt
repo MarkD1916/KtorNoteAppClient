@@ -1,6 +1,5 @@
 package com.androiddevs.ktornoteapp.data.remote.interceptors
 
-import android.util.Log
 import com.androiddevs.ktornoteapp.other.Constants.IGNORE_AUTH_URL
 import com.androiddevs.ktornoteapp.preferences.BasicAuthPreferences
 import okhttp3.Credentials
@@ -20,7 +19,7 @@ class BasicAuthInterceptor@Inject constructor(
             return chain.proceed(request)
         }
         val authenticatedRequest = request.newBuilder()
-            .header("Authorization", Credentials.basic(email ?: "", password ?: ""))
+            .header("Authorization", Credentials.basic(email, password))
             .build()
         return chain.proceed(authenticatedRequest)
     }

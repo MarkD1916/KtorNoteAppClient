@@ -96,7 +96,7 @@ class NoteDetailFragment : Fragment() {
                 mBinding.addOwnerProgressBar.visibility = View.GONE
                 snackbar(it.first)
             }
-        ){
+        ) {
             mBinding.addOwnerProgressBar.visibility = View.GONE
             snackbar(it.message)
         }
@@ -109,7 +109,7 @@ class NoteDetailFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
+        when (item.itemId) {
             R.id.miAddOwner -> showAddOwnerDialog()
         }
         return super.onOptionsItemSelected(item)

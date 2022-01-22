@@ -56,7 +56,6 @@ class NoteFragment : Fragment() {
         setupRecyclerView()
         subscribeToObservers()
         setupSwipeRefreshLayout()
-        Log.d("test case", "onViewCreated: ${basicAuthSharedPreferences.getStoredEmail()}")
         mBinding.fabAddNote.setOnClickListener {
             findNavController().navigate(
                 NoteFragmentDirections.actionNoteFragmentToModificationNoteFragment(
@@ -76,7 +75,7 @@ class NoteFragment : Fragment() {
             },
             onError = {
                 snackbar(it.first)
-                it.second?.let {notes->
+                it.second?.let { notes ->
                     noteAdapter.notes = notes
                 }
                 mBinding.swipeRefreshLayout.isRefreshing = false
@@ -115,8 +114,8 @@ class NoteFragment : Fragment() {
     }
 
     private val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
-      0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
-    ){
+        0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+    ) {
         override fun onChildDraw(
             c: Canvas,
             recyclerView: RecyclerView,
@@ -127,10 +126,11 @@ class NoteFragment : Fragment() {
             isCurrentlyActive: Boolean
         ) {
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-            if(actionState == ItemTouchHelper.ACTION_STATE_SWIPE){
+            if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
                 swipingItem.postValue(isCurrentlyActive)
             }
         }
+
         override fun onMove(
             recyclerView: RecyclerView,
             viewHolder: RecyclerView.ViewHolder,
@@ -143,18 +143,19 @@ class NoteFragment : Fragment() {
             val position = viewHolder.layoutPosition
             val note = noteAdapter.notes[position]
             viewModel.deleteNote(note.id)
-            Snackbar.make(requireView(), "Note was successfully deleted", Snackbar.LENGTH_LONG).apply {
-                setAction("Undo"){
-                    viewModel.insertNote(note)
-                    viewModel.deleteLocallyDeletedNoteID(note.id)
+            Snackbar.make(requireView(), "Note was successfully deleted", Snackbar.LENGTH_LONG)
+                .apply {
+                    setAction("Undo") {
+                        viewModel.insertNote(note)
+                        viewModel.deleteLocallyDeletedNoteID(note.id)
+                    }
+                    show()
                 }
-                show()
-            }
 
         }
     }
 
-    private fun setupSwipeRefreshLayout(){
+    private fun setupSwipeRefreshLayout() {
         mBinding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.syncAllNotes()
         }

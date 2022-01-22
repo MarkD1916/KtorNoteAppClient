@@ -2,13 +2,10 @@ package com.androiddevs.ktornoteapp.ui.note
 
 import androidx.lifecycle.*
 import com.androiddevs.ktornoteapp.data.local.model.Note
-import com.androiddevs.ktornoteapp.data.remote.responses.SimpleResponse
 import com.androiddevs.ktornoteapp.other.Event
 import com.androiddevs.ktornoteapp.other.asyncUtil.Resource
-import com.androiddevs.ktornoteapp.repository.main.MainRepository
 import com.androiddevs.ktornoteapp.repository.main.MainRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -29,7 +26,7 @@ class NoteViewModel @Inject constructor(
     fun syncAllNotes() = _forceUpdate.postValue(true)
 
 
-    fun insertNote(note:Note) = viewModelScope.launch {
+    fun insertNote(note: Note) = viewModelScope.launch {
         repository.insertNote(note)
     }
 

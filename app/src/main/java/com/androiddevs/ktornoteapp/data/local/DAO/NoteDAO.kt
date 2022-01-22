@@ -9,7 +9,6 @@ import androidx.room.Query
 import com.androiddevs.ktornoteapp.data.local.model.LocallyDeletedNoteID
 import com.androiddevs.ktornoteapp.data.local.model.Note
 import kotlinx.coroutines.flow.Flow
-import java.util.*
 
 
 @Dao
