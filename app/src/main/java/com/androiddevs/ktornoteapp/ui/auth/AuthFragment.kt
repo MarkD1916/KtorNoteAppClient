@@ -11,7 +11,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.androiddevs.ktornoteapp.R
 import com.androiddevs.ktornoteapp.databinding.FragmentAuthBinding
-import com.androiddevs.ktornoteapp.other.EventObserver
+import com.androiddevs.ktornoteapp.other.asyncUtil.EventObserver
 import com.androiddevs.ktornoteapp.preferences.BasicAuthPreferences
 import com.androiddevs.ktornoteapp.ui.snackbar
 import dagger.hilt.android.AndroidEntryPoint

@@ -10,7 +10,7 @@ import androidx.navigation.fragment.navArgs
 import com.androiddevs.ktornoteapp.R
 import com.androiddevs.ktornoteapp.data.local.model.Note
 import com.androiddevs.ktornoteapp.databinding.FragmentNoteDetailBinding
-import com.androiddevs.ktornoteapp.other.EventObserver
+import com.androiddevs.ktornoteapp.other.asyncUtil.EventObserver
 import com.androiddevs.ktornoteapp.ui.dialogs.AddOwnerDialog
 import com.androiddevs.ktornoteapp.ui.snackbar
 import dagger.hilt.android.AndroidEntryPoint

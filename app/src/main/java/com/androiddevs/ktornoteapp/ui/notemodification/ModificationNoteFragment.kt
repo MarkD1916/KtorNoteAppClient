@@ -14,7 +14,7 @@ import com.androiddevs.ktornoteapp.R
 import com.androiddevs.ktornoteapp.data.local.model.Note
 import com.androiddevs.ktornoteapp.databinding.FragmentAddModifiedNoteBinding
 import com.androiddevs.ktornoteapp.other.Constants.DEFAULT_NOTE_COLOR
-import com.androiddevs.ktornoteapp.other.EventObserver
+import com.androiddevs.ktornoteapp.other.asyncUtil.EventObserver
 import com.androiddevs.ktornoteapp.preferences.BasicAuthPreferences
 import com.androiddevs.ktornoteapp.ui.dialogs.ColorPickerDialogFragment
 import com.androiddevs.ktornoteapp.ui.snackbar

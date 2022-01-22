@@ -2,7 +2,7 @@ package com.androiddevs.ktornoteapp.ui.note
 
 import androidx.lifecycle.*
 import com.androiddevs.ktornoteapp.data.local.model.Note
-import com.androiddevs.ktornoteapp.other.Event
+import com.androiddevs.ktornoteapp.other.asyncUtil.Event
 import com.androiddevs.ktornoteapp.other.asyncUtil.Resource
 import com.androiddevs.ktornoteapp.repository.main.MainRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel

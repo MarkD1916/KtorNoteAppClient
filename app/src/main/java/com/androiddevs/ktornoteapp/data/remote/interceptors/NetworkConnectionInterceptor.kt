@@ -1,4 +1,4 @@
-package com.vmakd1916gmail.com.login_logout_register.api
+package com.androiddevs.ktornoteapp.data.remote.interceptors
 
 import android.content.Context
 import android.net.ConnectivityManager

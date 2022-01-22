@@ -3,7 +3,6 @@ package com.androiddevs.ktornoteapp.ui.note
 import android.content.pm.ActivityInfo.SCREEN_ORIENTATION_USER
 import android.graphics.Canvas
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -19,7 +18,7 @@ import com.androiddevs.ktornoteapp.adapters.AdapterActionListener
 import com.androiddevs.ktornoteapp.adapters.NoteAdapter
 import com.androiddevs.ktornoteapp.data.local.model.Note
 import com.androiddevs.ktornoteapp.databinding.FragmentNotesBinding
-import com.androiddevs.ktornoteapp.other.EventObserver
+import com.androiddevs.ktornoteapp.other.asyncUtil.EventObserver
 import com.androiddevs.ktornoteapp.preferences.BasicAuthPreferences
 import com.androiddevs.ktornoteapp.ui.snackbar
 import com.google.android.material.snackbar.Snackbar

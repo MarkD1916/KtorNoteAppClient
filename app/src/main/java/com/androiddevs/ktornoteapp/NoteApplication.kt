@@ -1,7 +1,7 @@
 package com.androiddevs.ktornoteapp
 
 import android.app.Application
-import com.vmakd1916gmail.com.login_logout_register.api.NetworkMonitor
+import com.androiddevs.ktornoteapp.data.remote.interceptors.NetworkMonitor
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 

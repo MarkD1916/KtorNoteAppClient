@@ -11,7 +11,7 @@ import com.androiddevs.ktornoteapp.other.asyncUtil.Resource
 import com.androiddevs.ktornoteapp.other.getAuthResponseFromServer
 import com.androiddevs.ktornoteapp.other.networkBoundResource
 import com.androiddevs.ktornoteapp.other.safeCall
-import com.vmakd1916gmail.com.login_logout_register.api.Variables
+import com.androiddevs.ktornoteapp.data.remote.interceptors.Variables
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
