@@ -96,61 +96,61 @@ class NoteDaoTest {
         assertThat(element).doesNotContain(note)
     }
 
-//    @Test
-//    fun deleteAllSyncedNotes() = testScope.runBlockingTest {
-//
-//        val note_synced = Note(
-//            title = "Test title",
-//            content = "Test content",
-//            date = 123,
-//            owners = listOf("Test owners"),
-//            color = "000000",
-//            isSynced = true,
-//        )
-//
-//        val note_not_synced = Note(
-//            title = "Test title",
-//            content = "Test content",
-//            date = 123,
-//            owners = listOf("Test owners"),
-//            color = "000000",
-//            isSynced = false,
-//        )
-//        val dataStartedCondition = async { dao.getAllNotes().take(1).toList()[0] }
-//        assertThat(dataStartedCondition.await()).isEmpty()
-//        Log.d("deleteAllSyncedNotes", "dataStartedCondition ${dataStartedCondition.await()}")
-//
-//
-//        dao.insertNote(note_synced)
-//        val addSyncedNote = async { dao.getAllNotes().take(1).toList()[0] }.await()
-//        assertThat(addSyncedNote).contains(note_synced)
-//        Log.d(
-//            "deleteAllSyncedNotes",
-//            "dataAddSyncedNote id = ${addSyncedNote[0].id}, " +
-//                    "isSynced = ${addSyncedNote[0].isSynced}, " +
-//                    "list len = ${addSyncedNote.size}"
-//        )
-//
-//        dao.insertNote(note_not_synced)
-//        val addNotSyncedNote = async { dao.getAllNotes().take(1).toList()[0] }.await()
-//        assertThat(addNotSyncedNote).contains(note_not_synced)
-//        Log.d(
-//            "deleteAllSyncedNotes",
-//            "dataAddNotSyncedNote id = ${addNotSyncedNote[1].id}, " +
-//                    "isSynced = ${addNotSyncedNote[1].isSynced}, " +
-//                    "list len = ${addNotSyncedNote.size}"
-//        )
-//
-//        dao.deleteAllSyncedNotes()
-//        val dataAfterDeleteAllSyncedNotes = async { dao.getAllNotes().take(1).toList()[0] }.await()
-//        Log.d(
-//            "deleteAllSyncedNotes",
-//            "dataAfterDeleteAllSyncedNotes id = ${dataAfterDeleteAllSyncedNotes[0].id}, " +
-//                    "isSynced = ${dataAfterDeleteAllSyncedNotes[0].isSynced}, " +
-//                    "list len = ${dataAfterDeleteAllSyncedNotes.size}"
-//        )
-//        assertThat(dataAfterDeleteAllSyncedNotes).doesNotContain(note_synced)
-//    }
+    @Test
+    fun deleteAllSyncedNotes() = runBlockingTest {
+
+        val note_synced = Note(
+            title = "Test title",
+            content = "Test content",
+            date = 123,
+            owners = listOf("Test owners"),
+            color = "000000",
+            isSynced = true,
+        )
+
+        val note_not_synced = Note(
+            title = "Test title",
+            content = "Test content",
+            date = 123,
+            owners = listOf("Test owners"),
+            color = "000000",
+            isSynced = false,
+        )
+        val dataStartedCondition = async { dao.getAllNotes().take(1).toList()[0] }
+        assertThat(dataStartedCondition.await()).isEmpty()
+        Log.d("deleteAllSyncedNotes", "dataStartedCondition ${dataStartedCondition.await()}")
+
+
+        dao.insertNote(note_synced)
+        val addSyncedNote = async { dao.getAllNotes().take(1).toList()[0] }.await()
+        assertThat(addSyncedNote).contains(note_synced)
+        Log.d(
+            "deleteAllSyncedNotes",
+            "dataAddSyncedNote id = ${addSyncedNote[0].id}, " +
+                    "isSynced = ${addSyncedNote[0].isSynced}, " +
+                    "list len = ${addSyncedNote.size}"
+        )
+
+        dao.insertNote(note_not_synced)
+        val addNotSyncedNote = async { dao.getAllNotes().take(1).toList()[0] }.await()
+        assertThat(addNotSyncedNote).contains(note_not_synced)
+        Log.d(
+            "deleteAllSyncedNotes",
+            "dataAddNotSyncedNote id = ${addNotSyncedNote[1].id}, " +
+                    "isSynced = ${addNotSyncedNote[1].isSynced}, " +
+                    "list len = ${addNotSyncedNote.size}"
+        )
+
+        dao.deleteAllSyncedNotes()
+        val dataAfterDeleteAllSyncedNotes = async { dao.getAllNotes().take(1).toList()[0] }.await()
+        Log.d(
+            "deleteAllSyncedNotes",
+            "dataAfterDeleteAllSyncedNotes id = ${dataAfterDeleteAllSyncedNotes[0].id}, " +
+                    "isSynced = ${dataAfterDeleteAllSyncedNotes[0].isSynced}, " +
+                    "list len = ${dataAfterDeleteAllSyncedNotes.size}"
+        )
+        assertThat(dataAfterDeleteAllSyncedNotes).doesNotContain(note_synced)
+    }
 
     @Test
     fun getNoteById() = runBlockingTest {
@@ -183,59 +183,59 @@ class NoteDaoTest {
         assertThat(noteByID).isNull()
     }
 
-//    @Test
-//    fun getAllUnsyncedNotes() = testScope.runBlockingTest {
-//        val note_synced = Note(
-//            title = "Test title",
-//            content = "Test content",
-//            date = 123,
-//            owners = listOf("Test owners"),
-//            color = "000000",
-//            isSynced = true,
-//        )
-//
-//        val note_not_synced = Note(
-//            title = "Test title",
-//            content = "Test content",
-//            date = 123,
-//            owners = listOf("Test owners"),
-//            color = "000000",
-//            isSynced = false,
-//        )
-//        val dataStartedCondition = async { dao.getAllNotes().take(1).toList()[0] }
-//        assertThat(dataStartedCondition.await()).isEmpty()
-//        Log.d("getAllUnsyncedNotes", "dataStartedCondition ${dataStartedCondition.await()}")
-//
-//
-//        dao.insertNote(note_synced)
-//        val addSyncedNote = async { dao.getAllNotes().take(1).toList()[0] }.await()
-//        assertThat(addSyncedNote).contains(note_synced)
-//        Log.d(
-//            "getAllUnsyncedNotes",
-//            "dataAddSyncedNote id = ${addSyncedNote[0].id}, " +
-//                    "isSynced = ${addSyncedNote[0].isSynced}, " +
-//                    "list len = ${addSyncedNote.size}"
-//        )
-//
-//        dao.insertNote(note_not_synced)
-//        val addNotSyncedNote = async { dao.getAllNotes().take(1).toList()[0] }.await()
-//        assertThat(addNotSyncedNote).contains(note_not_synced)
-//        Log.d(
-//            "getAllUnsyncedNotes",
-//            "dataAddNotSyncedNote id = ${addNotSyncedNote[1].id}, " +
-//                    "isSynced = ${addNotSyncedNote[1].isSynced}, " +
-//                    "list len = ${addNotSyncedNote.size}"
-//        )
-//
-//        val unsyncedNote = dao.getAllUnsyncedNotes()
-//        assertThat(unsyncedNote).contains(note_not_synced)
-//        Log.d(
-//            "getAllUnsyncedNotes",
-//            "unsyncedNote id = ${unsyncedNote[0].id}, " +
-//                    "isSynced = ${unsyncedNote[0].isSynced}, " +
-//                    "list len = ${unsyncedNote.size}"
-//        )
-//    }
+    @Test
+    fun getAllUnsyncedNotes() = runBlockingTest {
+        val note_synced = Note(
+            title = "Test title",
+            content = "Test content",
+            date = 123,
+            owners = listOf("Test owners"),
+            color = "000000",
+            isSynced = true,
+        )
+
+        val note_not_synced = Note(
+            title = "Test title",
+            content = "Test content",
+            date = 123,
+            owners = listOf("Test owners"),
+            color = "000000",
+            isSynced = false,
+        )
+        val dataStartedCondition = async { dao.getAllNotes().take(1).toList()[0] }
+        assertThat(dataStartedCondition.await()).isEmpty()
+        Log.d("getAllUnsyncedNotes", "dataStartedCondition ${dataStartedCondition.await()}")
+
+
+        dao.insertNote(note_synced)
+        val addSyncedNote = async { dao.getAllNotes().take(1).toList()[0] }.await()
+        assertThat(addSyncedNote).contains(note_synced)
+        Log.d(
+            "getAllUnsyncedNotes",
+            "dataAddSyncedNote id = ${addSyncedNote[0].id}, " +
+                    "isSynced = ${addSyncedNote[0].isSynced}, " +
+                    "list len = ${addSyncedNote.size}"
+        )
+
+        dao.insertNote(note_not_synced)
+        val addNotSyncedNote = async { dao.getAllNotes().take(1).toList()[0] }.await()
+        assertThat(addNotSyncedNote).contains(note_not_synced)
+        Log.d(
+            "getAllUnsyncedNotes",
+            "dataAddNotSyncedNote id = ${addNotSyncedNote[1].id}, " +
+                    "isSynced = ${addNotSyncedNote[1].isSynced}, " +
+                    "list len = ${addNotSyncedNote.size}"
+        )
+
+        val unsyncedNote = dao.getAllUnsyncedNotes()
+        assertThat(unsyncedNote).contains(note_not_synced)
+        Log.d(
+            "getAllUnsyncedNotes",
+            "unsyncedNote id = ${unsyncedNote[0].id}, " +
+                    "isSynced = ${unsyncedNote[0].isSynced}, " +
+                    "list len = ${unsyncedNote.size}"
+        )
+    }
 
 
 
