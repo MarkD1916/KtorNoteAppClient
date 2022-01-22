@@ -36,6 +36,12 @@ object AppModule {
 
     @Singleton
     @Provides
+    fun provideBasicAuthPreferences(@ApplicationContext context: Context) =
+        BasicAuthPreferences(context)
+
+
+    @Singleton
+    @Provides
     fun provideBasicAuthInterceptor(basicAuthSharedPreferences: BasicAuthPreferences): BasicAuthInterceptor =
         BasicAuthInterceptor(basicAuthSharedPreferences)
 
@@ -77,8 +83,5 @@ object AppModule {
         noteDAO: NoteDAO
     ): MainRepositoryImpl = MainRepositoryImpl(noteApi, noteDAO)
 
-    @Singleton
-    @Provides
-    fun provideBasicAuthPreferences(@ApplicationContext context: Context) =
-        BasicAuthPreferences(context)
+
 }

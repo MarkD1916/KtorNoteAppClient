@@ -3,6 +3,7 @@ package com.androiddevs.ktornoteapp.ui.note
 import android.content.pm.ActivityInfo.SCREEN_ORIENTATION_USER
 import android.graphics.Canvas
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -55,6 +56,7 @@ class NoteFragment : Fragment() {
         setupRecyclerView()
         subscribeToObservers()
         setupSwipeRefreshLayout()
+        Log.d("test case", "onViewCreated: ${basicAuthSharedPreferences.getStoredEmail()}")
         mBinding.fabAddNote.setOnClickListener {
             findNavController().navigate(
                 NoteFragmentDirections.actionNoteFragmentToModificationNoteFragment(
@@ -162,7 +164,7 @@ class NoteFragment : Fragment() {
         noteAdapter = NoteAdapter(requireContext(), object : AdapterActionListener {
             override fun itemClick(item: Note) {
                 findNavController().navigate(
-                    NoteFragmentDirections.actionNoteFragmentToModificationNoteFragment(item.id)
+                    NoteFragmentDirections.actionNoteFragmentToNoteDetailFragment(item.id)
                 )
             }
         })

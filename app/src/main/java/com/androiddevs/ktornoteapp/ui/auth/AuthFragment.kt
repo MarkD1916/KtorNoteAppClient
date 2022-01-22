@@ -63,11 +63,14 @@ class AuthFragment : Fragment() {
 
     }
 
-    private fun redirectLogin(){
+    private fun redirectLogin() {
         val navOptions = NavOptions.Builder()
             .setPopUpTo(R.id.authFragment, true)
             .build()
-        findNavController().navigate(AuthFragmentDirections.actionAuthFragmentToNoteFragment(), navOptions)
+        findNavController().navigate(
+            AuthFragmentDirections.actionAuthFragmentToNoteFragment(),
+            navOptions
+        )
     }
 
     private fun subscribeToObservers() {

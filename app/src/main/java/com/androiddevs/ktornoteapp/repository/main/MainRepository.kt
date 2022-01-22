@@ -1,9 +1,12 @@
 package com.androiddevs.ktornoteapp.repository.main
 
+import androidx.lifecycle.LiveData
 import com.androiddevs.ktornoteapp.data.local.model.LocallyDeletedNoteID
 import com.androiddevs.ktornoteapp.data.local.model.Note
+import com.androiddevs.ktornoteapp.data.remote.responses.SimpleResponse
 import com.androiddevs.ktornoteapp.other.asyncUtil.Resource
 import kotlinx.coroutines.flow.Flow
+import retrofit2.Response
 import java.util.*
 
 interface MainRepository {
@@ -21,4 +24,11 @@ interface MainRepository {
     suspend fun getNoteById(noteId: String): Note?
 
     suspend fun syncNotes()
+
+    fun observeNoteByID(noteID: String): LiveData<Note>
+
+    suspend fun addOwnerToNote(
+        owner: String,
+        noteID: String
+    ): Resource<Response<SimpleResponse>>
 }

@@ -4,9 +4,13 @@ import com.androiddevs.ktornoteapp.data.local.DAO.NoteDAO
 import com.androiddevs.ktornoteapp.data.local.model.LocallyDeletedNoteID
 import com.androiddevs.ktornoteapp.data.local.model.Note
 import com.androiddevs.ktornoteapp.data.remote.api.NoteApi
+import com.androiddevs.ktornoteapp.data.remote.requests.AddOwnerRequest
 import com.androiddevs.ktornoteapp.data.remote.requests.DeleteNoteRequest
+import com.androiddevs.ktornoteapp.data.remote.responses.SimpleResponse
 import com.androiddevs.ktornoteapp.other.asyncUtil.Resource
+import com.androiddevs.ktornoteapp.other.getAuthResponseFromServer
 import com.androiddevs.ktornoteapp.other.networkBoundResource
+import com.androiddevs.ktornoteapp.other.safeCall
 import com.vmakd1916gmail.com.login_logout_register.api.Variables
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -66,7 +70,7 @@ class MainRepositoryImpl @Inject constructor(
             },
             saveFetchResult = { response ->
                 response?.body()?.let {
-                    insertNotes(it.onEach { note-> note.isSynced = true })
+                    insertNotes(it.onEach { note -> note.isSynced = true })
                 }
             },
             shouldFetch = {
@@ -93,4 +97,18 @@ class MainRepositoryImpl @Inject constructor(
         }
     }
 
+    override fun observeNoteByID(noteID: String) = noteDao.observeNoteById(noteID)
+
+    override suspend fun addOwnerToNote(
+        owner: String,
+        noteID: String
+    ): Resource<Response<SimpleResponse>> {
+        return withContext(Dispatchers.IO) {
+            safeCall {
+                val response = noteApi.addOwnerToNote(AddOwnerRequest(owner, noteID))
+                val result = getAuthResponseFromServer(response)
+                Resource.Success(result)
+            }
+        }
+    }
 }

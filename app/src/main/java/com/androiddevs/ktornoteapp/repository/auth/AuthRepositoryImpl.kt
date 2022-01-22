@@ -2,6 +2,7 @@ package com.androiddevs.ktornoteapp.repository.auth
 
 import com.androiddevs.ktornoteapp.data.remote.api.NoteApi
 import com.androiddevs.ktornoteapp.data.remote.requests.AccountRequest
+import com.androiddevs.ktornoteapp.data.remote.requests.AddOwnerRequest
 import com.androiddevs.ktornoteapp.data.remote.responses.SimpleResponse
 import com.androiddevs.ktornoteapp.other.asyncUtil.Resource
 import com.androiddevs.ktornoteapp.other.getAuthResponseFromServer
