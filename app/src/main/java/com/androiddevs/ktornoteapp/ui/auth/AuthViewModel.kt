@@ -34,6 +34,7 @@ class AuthViewModel @Inject constructor(
 
         if (password != confirmPassword) {
             _registerStatus.postValue(Event(Resource.Error("The password do not match")))
+            return
         }
         viewModelScope.launch(Dispatchers.IO) {
             val response = authRepositoryImpl.register(email, password)
