@@ -83,6 +83,7 @@ class AuthFragment : Fragment() {
             }
         ) {
             mBinding.registerProgressBar.visibility = View.GONE
+            snackbar("Successfully register")
         }
         )
 

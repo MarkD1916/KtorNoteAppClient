@@ -1,6 +1,6 @@
 package com.androiddevs.ktornoteapp.other.asyncUtil
 
-sealed class Resource<T>(val data: T? = null, val message: String? = null, val info:HashMap<String, T>? =null ) {
+sealed class Resource<T>(val data: T? = null, val message: String? = null ) {
 
     class Success<T>(data: T): Resource<T>(data)
 
