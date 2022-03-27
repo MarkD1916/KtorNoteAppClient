@@ -79,7 +79,7 @@ object AppModule {
     }
 
     @Provides
-    fun providesBaseUrl(): String = "https://10.0.2.2:8002"
+    fun providesBaseUrl(): String = "http://10.0.2.2:8001"
 
     @Provides
     @Singleton
